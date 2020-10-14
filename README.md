@@ -1,5 +1,7 @@
 # Meraki Content filtering URL blocking manager
 
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/routetonull/updateContentFiltering)
+
 Command-line utility to manage Content filtering URL blocking on [Meraki](https://meraki.cisco.com/) dashboard.
 
 **WARNING: The changes are applied to all the networks of the organization.**
