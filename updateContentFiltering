@@ -177,10 +177,10 @@ def updateContentFiltering(apikey, orgid, patterns, action, intent, dry, filtern
             else:
                 click.echo(
                     click.style(
-                        f"🚫\t NO SECURITY APPLIANCES\t\t{netId}\t NAME:\t{netName}",
+                        f"🚫\t NO SECURITY APPLIANCES IN NETWORK\t\t{netId}\t NAME:\t{netName}",
                         fg="yellow",
                     )
                 )
 
-
-updateContentFiltering()
+if __name__ == '__main__':
+    updateContentFiltering()
