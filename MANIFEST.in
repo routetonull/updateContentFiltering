@@ -1,0 +1,5 @@
+include LICENSE
+include VERSION
+include NOTICE
+include README.md
+include CHANGELOG.md
