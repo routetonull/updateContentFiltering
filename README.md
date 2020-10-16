@@ -12,14 +12,11 @@ Clone the repository
 
     git clone https://github.com/routetonull/updateContentFiltering.git
 
-Install [virtualenv](https://virtualenv.pypa.io/en/latest/).
-
 Create a new virtualenv and activate it
 
     cd updateContentFiltering
     python3 -m venv venv
     source venv/bin/activate
-
 
 Install the module
 
