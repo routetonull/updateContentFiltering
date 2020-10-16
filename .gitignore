@@ -1,5 +1,11 @@
 *.env
-venv
+venv*
 .vscode
 __pycache__
-updateContentFiltering.egg-info
+*.egg-info
+build/
+dist/
+eggs/
+.eggs/
+wheels/
+*.env

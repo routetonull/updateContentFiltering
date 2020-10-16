@@ -1,8 +1,8 @@
 # Meraki Content filtering URL blocking manager
 
-Command-line utility to manage Content filtering URL blocking on [Meraki](https://meraki.cisco.com/) dashboard.
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/routetonull/updateContentFiltering)
 
-**WARNING: The changes are applied to all the networks of the organization.**
+Command-line utility to manage Content filtering URL blocking on [Meraki](https://meraki.cisco.com/) dashboard.
 
 Copyright (c) 2020, Gian Paolo Boarina
 
@@ -16,23 +16,30 @@ Install [virtualenv](https://virtualenv.pypa.io/en/latest/).
 
 Create a new virtualenv and activate it
 
-    virtualenv venv
+    cd updateContentFiltering
+    python3 -m venv venv
     source venv/bin/activate
+
 
 Install the module
 
-    pip3 install --editable .
+    pip3 install .
 
-Get API KEY from Meraki dashboard, instructions **[HERE](https://documentation.meraki.com/zGeneral_Administration/Other_Topics/The_Cisco_Meraki_Dashboard_API)**.
+Get the API KEY from Meraki dashboard, instructions **[HERE](https://documentation.meraki.com/zGeneral_Administration/Other_Topics/The_Cisco_Meraki_Dashboard_API)**.
 
-Get organization ID using this script (included in the repository)
 
-    ./getOrgID.py --apikey myApiKey
-
-Set *env vars* for API KEY and organization ID. This is not mandatory but makes thing easier.
+Set *env var* for API KEY. This is not mandatory but makes things easier.
 
     export APIKEY=myApiKey
+    
+Get the Organization ID using this script (included in the repository)
+
+    getOrgID --apikey $APIKEY
+
+Set *env var* for the Organization. This is not mandatory but makes things easier.
+
     export ORGID=myOrgID
+
 
 To leave virtualenv run
 
@@ -55,3 +62,7 @@ Remove pattern from block list
 Use flag **--dry** for dry run (no changes applied)
 
     updateContentFiltering --apikey $APIKEY --orgid $ORGID --action remove --intent block --dry ifconfig.it
+
+Option **--filternetwork** filters networks that in include a text in the name
+
+    updateContentFiltering --apikey $APIKEY --orgid $ORGID --action remove --intent block --dry --filternetwork EMEA-IT ifconfig.it 

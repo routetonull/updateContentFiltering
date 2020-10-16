@@ -30,6 +30,12 @@ def main(apikey):
         for org in orgs:
             click.echo(f"ORG ID: {org.get('id'):20}ORG NAME: {org.get('name')}")
     except:
-        click.echo(click.style(f"\n❌ ❌ ❌ ERROR READING ORGS - Verify API KEY is valid ❌ ❌ ❌\n", fg="red",))
+        click.echo(
+            click.style(
+                f"\n❌ ❌ ❌ ERROR READING ORGS - Verify API KEY is valid ❌ ❌ ❌\n",
+                fg="red",
+            )
+        )
+
 
 main()
