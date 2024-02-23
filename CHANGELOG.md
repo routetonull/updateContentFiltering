@@ -1,3 +1,7 @@
+# Release 0.3 date 20240223
+
+- Fixed filtering network name
+- Add filter outpud in the logs
 
 # Release 0.2 date 20201016
 

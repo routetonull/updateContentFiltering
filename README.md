@@ -60,6 +60,6 @@ Use flag **--dry** for dry run (no changes applied)
 
     updateContentFiltering --apikey $APIKEY --orgid $ORGID --action remove --intent block --dry ifconfig.it
 
-Option **--filternetwork** filters networks that in include a text in the name
+Option **--filternetwork** filters networks that in include a string in the name
 
     updateContentFiltering --apikey $APIKEY --orgid $ORGID --action remove --intent block --dry --filternetwork EMEA-IT ifconfig.it 

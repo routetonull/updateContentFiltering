@@ -95,92 +95,97 @@ def updateContentFiltering(apikey, orgid, patterns, action, intent, dry, filtern
     for net in networks:
         netId = net.get("id")
         netName = net.get("name")
-        if not filternetwork or filternetwork.upper() in netName.upper():
-            if "appliance" in net.get(
-                "productTypes"
-            ):  # content filtering only works for networks that include security appliances
-                if intent.lower() == "block":
-                    try:
-                        urlPatterns = m.appliance.getNetworkApplianceContentFiltering(
-                            netId
-                        ).get("blockedUrlPatterns")
-                    except:
-                        click.echo(
-                            f"❌ERROR❌ERROR❌\tNETWORK\t{netId}\tNAME:\t{netName}❌ERROR❌ERROR❌"
-                        )
-                elif intent.lower() == "allow":
-                    try:
-                        urlPatterns = m.appliance.getNetworkApplianceContentFiltering(
-                            netId
-                        ).get("allowedUrlPatterns")
-                    except:
-                        click.echo(
-                            f"❌ERROR❌ERROR❌\tNETWORK\t{netId}\tNAME:\t{netName}❌ERROR❌ERROR❌"
-                        )
-
-                drift = list(set(urlPatterns).difference(set(patterns)))
-                if (  # verify if any action is required for the network
-                    action.lower() == "remove"
-                    and urlPatterns == drift
-                    or action.lower() == "add"
-                    and set(patterns).issubset(set(urlPatterns))
-                ):
-                    click.echo(
-                        click.style(
-                            f"✅\tNO ACTION REQUIRED NETWORK\t{netId}\tNAME\t{netName}",
-                            fg="green",
-                        )
-                    )
-                else:
-                    click.echo(
-                        click.style(
-                            f"💪\tFIXING NETWORK\t{netId}\tNAME\t{netName}", fg="yellow"
-                        )
-                    )
-                    if action.lower() == "remove":
-                        urlPatterns = drift
-                    elif action.lower() == "add":
-                        urlPatterns.extend(patterns)
-                        urlPatterns = list(set(urlPatterns))
+        #if not filternetwork or filternetwork.upper() in netName.upper():
+        if filternetwork:
+            click.echo(
+                f"⚠️\tNET FILTER APPLIED: {filternetwork}\tNETWORK NAME: {netName}"
+            )
+            if filternetwork.upper() not in netName.upper():
+                if "appliance" in net.get(
+                    "productTypes"
+                ):  # content filtering only works for networks that include security appliances
                     if intent.lower() == "block":
                         try:
-                            if not dry:
-                                m.appliance.updateNetworkApplianceContentFiltering(
-                                    networkId=netId, blockedUrlPatterns=urlPatterns
-                                )
-                            click.echo(
-                                click.style(
-                                    f"💪\tNETWORK\t{netId}\tNAME:\t{netName}\tUPDATED BLOCKED URL PATTERNS",
-                                    fg="green",
-                                )
-                            )
+                            urlPatterns = m.appliance.getNetworkApplianceContentFiltering(
+                                netId
+                            ).get("blockedUrlPatterns")
                         except:
                             click.echo(
-                                f"❌ERROR❌ERROR❌\tUPDATING NETWORK\t{netId}\tNAME:\t{netName}❌ERROR❌ERROR❌"
+                                f"❌ERROR❌ERROR❌\tNETWORK\t{netId}\tNAME:\t{netName}❌ERROR❌ERROR❌"
                             )
                     elif intent.lower() == "allow":
                         try:
-                            if not dry:
-                                m.appliance.updateNetworkApplianceContentFiltering(
-                                    networkId=netId, allowedUrlPatterns=urlPatterns
-                                )
-                            click.echo(
-                                click.style(
-                                    f"💪\tNETWORK\t{netId}\tNAME\t{netName}\tUPDATED ALLOWED URL PATTERNS",
-                                    fg="green",
-                                )
-                            )
+                            urlPatterns = m.appliance.getNetworkApplianceContentFiltering(
+                                netId
+                            ).get("allowedUrlPatterns")
                         except:
                             click.echo(
-                                f"❌ERROR❌ERROR❌\tUPDATING NETWORK\t{netId}\tNAME\t{netName}❌ERROR❌ERROR❌"
+                                f"❌ERROR❌ERROR❌\tNETWORK\t{netId}\tNAME:\t{netName}❌ERROR❌ERROR❌"
                             )
-            else:
-                click.echo(
-                    click.style(
-                        f"🚫\t NO SECURITY APPLIANCES IN NETWORK\t\t{netId}\t NAME:\t{netName}",
-                        fg="yellow",
+
+                    drift = list(set(urlPatterns).difference(set(patterns)))
+                    if (  # verify if any action is required for the network
+                        action.lower() == "remove"
+                        and urlPatterns == drift
+                        or action.lower() == "add"
+                        and set(patterns).issubset(set(urlPatterns))
+                    ):
+                        click.echo(
+                            click.style(
+                                f"✅\tNO ACTION REQUIRED NETWORK\t{netId}\tNAME\t{netName}",
+                                fg="green",
+                            )
+                        )
+                    else:
+                        click.echo(
+                            click.style(
+                                f"💪\tFIXING NETWORK\t{netId}\tNAME\t{netName}", fg="yellow"
+                            )
+                        )
+                        if action.lower() == "remove":
+                            urlPatterns = drift
+                        elif action.lower() == "add":
+                            urlPatterns.extend(patterns)
+                            urlPatterns = list(set(urlPatterns))
+                        if intent.lower() == "block":
+                            try:
+                                if not dry:
+                                    m.appliance.updateNetworkApplianceContentFiltering(
+                                        networkId=netId, blockedUrlPatterns=urlPatterns
+                                    )
+                                click.echo(
+                                    click.style(
+                                        f"💪\tNETWORK\t{netId}\tNAME:\t{netName}\tUPDATED BLOCKED URL PATTERNS",
+                                        fg="green",
+                                    )
+                                )
+                            except:
+                                click.echo(
+                                    f"❌ERROR❌ERROR❌\tUPDATING NETWORK\t{netId}\tNAME:\t{netName}❌ERROR❌ERROR❌"
+                                )
+                        elif intent.lower() == "allow":
+                            try:
+                                if not dry:
+                                    m.appliance.updateNetworkApplianceContentFiltering(
+                                        networkId=netId, allowedUrlPatterns=urlPatterns
+                                    )
+                                click.echo(
+                                    click.style(
+                                        f"💪\tNETWORK\t{netId}\tNAME\t{netName}\tUPDATED ALLOWED URL PATTERNS",
+                                        fg="green",
+                                    )
+                                )
+                            except:
+                                click.echo(
+                                    f"❌ERROR❌ERROR❌\tUPDATING NETWORK\t{netId}\tNAME\t{netName}❌ERROR❌ERROR❌"
+                                )
+                else:
+                    click.echo(
+                        click.style(
+                            f"🚫\t NO SECURITY APPLIANCES IN NETWORK\t\t{netId}\t NAME:\t{netName}",
+                            fg="yellow",
+                        )
                     )
-                )
 
 if __name__ == '__main__':
     updateContentFiltering()
