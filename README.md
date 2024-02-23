@@ -4,7 +4,7 @@
 
 Command-line utility to manage Content filtering URL blocking on [Meraki](https://meraki.cisco.com/) dashboard.
 
-Copyright (c) 2020, Gian Paolo Boarina
+Copyright (c) 2024, Gian Paolo Boarina
 
 ## Installation
 
